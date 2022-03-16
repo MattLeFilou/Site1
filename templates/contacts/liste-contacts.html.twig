@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{parent()}}liste-contacts
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h1 class="text-center text-light mt-4 pt-4 display-1 fw-bold">
+        LISTE DES CONTACTS</h1>
+
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 bg-white p-4 m-0 text-light">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="fw-bold text-dark">
+                            <th scope="col">Nom</th>
+                            <th scope="col">Sujet</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Date d'envoi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contacts in contacts |sort((a, b) => b.dateEnvoi <=> a.dateEnvoi) %}
+                        <tr class="{{ cycle(['table-light', 'table-light'], loop.index0) }}">
+                            <td>{{ contacts.nom | capitalize }}</td>
+                            <td>{{ contacts.sujet | capitalize }}</td>
+                            <td>{{ contacts.email | lower }}</td>
+                            <td>{{ contacts.message | lower }}</td>
+                            <td>{{ contacts.dateEnvoi | date("d-m-Y à H:i:s") }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
